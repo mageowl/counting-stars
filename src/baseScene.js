@@ -14,7 +14,7 @@ export default class BaseScene extends Phaser.Scene {
 	playerCallbacks = [];
 
 	preload() {
-		this.load.setBaseURL("../assets/");
+		this.load.setBaseURL("assets/");
 
 		this.load.aseprite(
 			"player",
