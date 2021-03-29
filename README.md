@@ -1,2 +1,2 @@
 # couting-stars
-Small Mega Man like platformer made in [phaser](github.com/photonstorm/phaser).
+Small Mega Man like platformer made in [phaser](https://github.com/photonstorm/phaser).
