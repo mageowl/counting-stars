@@ -80,9 +80,7 @@
   <object id="1" name="spawnPoint" type="spawn" x="16" y="64">
    <point/>
   </object>
-  <object id="3" name="key1" type="key" gid="37" x="528" y="32" width="16" height="16"/>
-  <object id="5" type="door" gid="49" x="1136" y="416" width="16" height="16"/>
-  <object id="6" type="door" gid="45" x="1136" y="400" width="16" height="16"/>
-  <object id="7" name="door1" type="door" gid="41" x="1136" y="384" width="16" height="16"/>
+  <object id="3" name="key-1" type="key" gid="37" x="528" y="32" width="16" height="16"/>
+  <object id="7" name="door-1" type="door" gid="38" x="1136" y="416" width="16" height="16"/>
  </objectgroup>
 </map>

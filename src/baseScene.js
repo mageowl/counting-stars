@@ -1,4 +1,4 @@
-import Key from "./objects/key.js";
+import { Key, Door } from "./objects/key-door.js";
 import Player from "./objects/player.js";
 import SpawnPoint from "./objects/spawnPoint.js";
 
@@ -14,7 +14,7 @@ export default class BaseScene extends Phaser.Scene {
 	playerCallbacks = [];
 
 	preload() {
-		this.load.setBaseURL("../assets");
+		this.load.setBaseURL("../assets/");
 
 		this.load.aseprite(
 			"player",
@@ -28,6 +28,7 @@ export default class BaseScene extends Phaser.Scene {
 		);
 
 		this.load.image("grassTileset", "art/tileset/grass.png");
+		this.load.image("door", "art/tileset/door.png");
 		this.load.image("playerBullet", "art/bullet.png");
 
 		this.load.spritesheet("objects", "art/tileset/objects.png", {
@@ -35,6 +36,7 @@ export default class BaseScene extends Phaser.Scene {
 			frameHeight: 16,
 			endFrame: 15
 		});
+
 		// this.load.tilemapTiledJSON("level", "tilemaps/export/levelX.json");
 	}
 
@@ -55,8 +57,13 @@ export default class BaseScene extends Phaser.Scene {
 				case "spawn":
 					this.levelObjects.add(new SpawnPoint({ x, y, scene: this }));
 					break;
+
 				case "key":
 					this.levelObjects.add(new Key({ x, y, scene: this }));
+					break;
+				case "door":
+					this.levelObjects.add(new Door({ x, y, scene: this }));
+					break;
 			}
 		});
 

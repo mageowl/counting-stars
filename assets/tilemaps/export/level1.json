@@ -48,8 +48,8 @@
                  "type":"spawn",
                  "visible":true,
                  "width":0,
-                 "x":16.3333333333333,
-                 "y":57.6666666666667
+                 "x":16,
+                 "y":64
                 }, 
                 {
                  "gid":37,
@@ -64,31 +64,7 @@
                  "y":32
                 }, 
                 {
-                 "gid":49,
-                 "height":16,
-                 "id":5,
-                 "name":"",
-                 "rotation":0,
-                 "type":"door",
-                 "visible":true,
-                 "width":16,
-                 "x":1136,
-                 "y":416
-                }, 
-                {
-                 "gid":45,
-                 "height":16,
-                 "id":6,
-                 "name":"",
-                 "rotation":0,
-                 "type":"door",
-                 "visible":true,
-                 "width":16,
-                 "x":1136,
-                 "y":400
-                }, 
-                {
-                 "gid":41,
+                 "gid":42,
                  "height":16,
                  "id":7,
                  "name":"door1",
@@ -97,7 +73,7 @@
                  "visible":true,
                  "width":16,
                  "x":1136,
-                 "y":384
+                 "y":416
                 }],
          "opacity":1,
          "type":"objectgroup",
