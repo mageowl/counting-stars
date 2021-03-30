@@ -62,6 +62,11 @@ export class Door extends Phaser.Physics.Arcade.Sprite {
 	onPlayerCreated = (player) => {
 		this.player = player;
 		this.config.scene.physics.add.collider(player, this, this.onOpen);
+		this.config.scene.physics.add.collider(
+			player.bullets,
+			this,
+			this.explodeBullet
+		);
 	};
 
 	onOpen = () => {
@@ -69,5 +74,9 @@ export class Door extends Phaser.Physics.Arcade.Sprite {
 			this.destroy();
 			this.player.keysCollected--;
 		}
+	};
+
+	explodeBullet = (bullet) => {
+		bullet.explode();
 	};
 }
