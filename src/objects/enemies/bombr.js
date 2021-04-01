@@ -4,9 +4,10 @@ const speed = 75;
 
 export default class Bombr extends Enemy {
 	static state = {
-		FLY: "bombr-fly",
-		DIVE: "bombr-dive",
-		RESPAWN: "bombr-spawn"
+		FLY: { anim: "bombr-fly", repeat: true },
+		DIVE: { anim: "bombr-dive", repeat: true },
+		RESPAWN: { anim: "bombr-spawn", repeat: false },
+		EXPLODE: { anim: "bombr-explode", repeat: false }
 	};
 
 	constructor(config) {
@@ -22,18 +23,22 @@ export default class Bombr extends Enemy {
 	}
 
 	update() {
-		if (this.state === Bombr.state.FLY && this.body) {
+		this.play(
+			{ key: this.state.anim, repeat: this.state.repeat ? -1 : 0 },
+			true
+		);
+
+		if (this.state === Bombr.state.FLY) {
 			if (this.x > this.startX + 64) this.dir = -1;
 			else if (this.x < this.startX - 64) this.dir = 1;
-			this.setVelocityX(speed * this.dir);
+			this.setVelocityX(speed * this.dir).setFlipX(this.dir === -1);
 
 			if (
-				this.player.x > this.x - 16 &&
-				this.player.x < this.x + 16 &&
+				this.player.x > this.x - 8 &&
+				this.player.x < this.x + 8 &&
 				this.player.y > this.y + 8 &&
 				this.player.y < this.y + 128
 			) {
-				this.play({ key: "bombr-dive", repeat: -1 }, true);
 				this.state = Bombr.state.DIVE;
 				this.setVelocity(0, -100).body.setAllowGravity(true);
 				this.levelCollider.collideCallback = this.explode;
@@ -43,21 +48,22 @@ export default class Bombr extends Enemy {
 
 	explode = () => {
 		this.levelCollider.collideCallback = null;
-		this.play("bombr-explode", true).once(
+		this.state = Bombr.state.EXPLODE;
+		this.invul = true;
+		this.once(
 			"animationcomplete",
 			function () {
 				this.x = this.startX;
 				this.y = this.startY;
 				this.state = Bombr.state.RESPAWN;
-				this.play("bombr-spawn")
-					.once(
-						"animationcomplete",
-						function () {
-							this.state = Bombr.state.FLY;
-						},
-						this
-					)
-					.body.setAllowGravity(false);
+				this.once(
+					"animationcomplete",
+					function () {
+						this.state = Bombr.state.FLY;
+						this.invul = false;
+					},
+					this
+				).body.setAllowGravity(false);
 			},
 			this
 		);

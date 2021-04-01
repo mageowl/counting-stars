@@ -13,6 +13,11 @@ export default class BaseScene extends Phaser.Scene {
 	spawnPt = null;
 
 	playerCallbacks = [];
+	/**
+	 * @type {Phaser.Physics.Arcade.Sprite[]}
+	 *
+	 * @memberof BaseScene
+	 */
 	updates = [];
 
 	preload() {
@@ -104,7 +109,7 @@ export default class BaseScene extends Phaser.Scene {
 	}
 
 	update() {
-		this.updates.forEach((o) => o.update());
+		this.updates.forEach((o) => (o.active ? o.update() : null));
 	}
 
 	regesterUpdate(object) {
