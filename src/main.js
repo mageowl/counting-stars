@@ -15,3 +15,5 @@ const game = new Phaser.Game({
 		pixelArt: true
 	}
 });
+
+globalThis.pg = game;

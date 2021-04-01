@@ -1,4 +1,5 @@
 import BaseScene from "../baseScene.js";
+import Charecter from "./charecter.js";
 import Player from "./player.js";
 
 /**
@@ -9,7 +10,7 @@ import Player from "./player.js";
  * @property {number} y Y position
  */
 
-export default class Enemy extends Phaser.Physics.Arcade.Sprite {
+export default class Enemy extends Charecter {
 	/**
 	 * Player object.
 	 * @type {Player}
@@ -32,11 +33,11 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	 * @memberof Enemy
 	 */
 	constructor(config) {
-		super(config.scene, config.x, config.y, config.sprite);
+		super(config);
 		this.config = config;
 
-		this.hp = config.hp;
-		this.invul = false;
+		this.playerDamage = this.config.damage;
+		this.canDamage = 10;
 
 		config.scene.add.existing(this);
 		config.scene.physics.add.existing(this);
@@ -58,17 +59,21 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 			player.bullets,
 			this.damage.bind(null, 10)
 		);
+
+		this.playerCollider = this.config.scene.physics.add.overlap(
+			this,
+			player,
+			this.playerCollisionCB
+		);
 	};
 
-	update() {}
-
-	damage = (dm, _this, obj2) => {
-		if (obj2) obj2.explode();
-		if (!this.invul) {
-			this.hp -= dm;
-			if (this.hp <= 0) {
-				this.destroy();
-			}
-		}
+	playerCollisionCB = () => {
+		if (this.canDamage === 0)
+			this.player.setVelocityY(-300).damage(this.playerDamage);
+		this.canDamage = 10;
 	};
+
+	update() {
+		if (this.canDamage > 0) this.canDamage--;
+	}
 }

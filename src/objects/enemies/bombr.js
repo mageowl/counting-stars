@@ -11,7 +11,7 @@ export default class Bombr extends Enemy {
 	};
 
 	constructor(config) {
-		super({ ...config, sprite: "bombr", hp: 10 });
+		super({ ...config, sprite: "bombr", hp: 10, damage: 10 });
 
 		this.play({ key: "bombr-fly", repeat: -1 }).body.setAllowGravity(false);
 
@@ -23,6 +23,8 @@ export default class Bombr extends Enemy {
 	}
 
 	update() {
+		super.update();
+
 		this.play(
 			{ key: this.state.anim, repeat: this.state.repeat ? -1 : 0 },
 			true
@@ -40,6 +42,7 @@ export default class Bombr extends Enemy {
 				this.player.y < this.y + 128
 			) {
 				this.state = Bombr.state.DIVE;
+				this.playerDamage = 20;
 				this.setVelocity(0, -100).body.setAllowGravity(true);
 				this.levelCollider.collideCallback = this.explode;
 			}
@@ -61,6 +64,7 @@ export default class Bombr extends Enemy {
 					function () {
 						this.state = Bombr.state.FLY;
 						this.invul = false;
+						this.playerDamage = 10;
 					},
 					this
 				).body.setAllowGravity(false);

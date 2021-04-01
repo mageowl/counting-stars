@@ -1,9 +1,10 @@
 import Bullet from "./bullet.js";
+import Charecter from "./charecter.js";
 
 const speed = 150;
 const jumpHeight = 350;
 
-export default class Player extends Phaser.Physics.Arcade.Sprite {
+export default class Player extends Charecter {
 	keysCollected = [];
 
 	/**
@@ -15,7 +16,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 	 * @memberof Player
 	 */
 	constructor(config) {
-		super(config.scene, config.x, config.y, "player");
+		super({ ...config, sprite: "player", hp: 100 });
 		this.config = config;
 
 		config.scene.add.existing(this);
@@ -26,8 +27,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		this.bullets = config.scene.add.group();
 
 		this.reloadTime = 0;
-
-		this.hp = 100;
 		this.invul = false;
 
 		this.setDepth(1).setOrigin(0.5, 1);
@@ -66,15 +65,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 			}
 		} else this.reloadTime = 0;
 	}
-
-	damage = (dm) => {
-		if (!this.invul) {
-			this.hp -= dm;
-			if (this.hp <= 0) {
-				this.destroy();
-			}
-		}
-	};
 }
 
 class PlayerBullet extends Bullet {
