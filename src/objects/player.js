@@ -4,7 +4,7 @@ const speed = 150;
 const jumpHeight = 350;
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
-	keysCollected = 0;
+	keysCollected = [];
 
 	/**
 	 * Creates a Player GameObject.
@@ -20,11 +20,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
 		config.scene.add.existing(this);
 		config.scene.physics.add.existing(this);
+		config.scene.regesterUpdate(this);
 
 		this.keys = config.scene.input.keyboard.createCursorKeys();
 		this.bullets = config.scene.add.group();
 
 		this.reloadTime = 0;
+
+		this.hp = 100;
+		this.invul = false;
 
 		this.setDepth(1).setOrigin(0.5, 1);
 	}
@@ -36,14 +40,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
 		if (this.keys.left.isDown || this.keys.right.isDown) {
 			this.setFlipX(this.keys.left.isDown);
-			this.anims.play({ key: "run", repeat: -1 }, true);
-		} else this.anims.play({ key: "idle", repeat: -1 }, true);
+			this.anims.play({ key: "player-run", repeat: -1 }, true);
+		} else this.anims.play({ key: "player-idle", repeat: -1 }, true);
 
 		if (this.keys.up.isDown && this.body.onFloor()) {
 			this.setVelocityY(-jumpHeight);
 		} else if (!this.body.onFloor()) {
-			this.play("jump", true);
-			this.setFrame(this.body.velocity.y > 0 ? 7 : 6);
+			this.play("player-jump", true).setFrame(this.body.velocity.y > 0 ? 7 : 6);
 		}
 
 		if (this.keys.space.isDown) {
@@ -63,6 +66,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 			}
 		} else this.reloadTime = 0;
 	}
+
+	damage = (dm) => {
+		if (!this.invul) {
+			this.hp -= dm;
+			if (this.hp <= 0) {
+				this.destroy();
+			}
+		}
+	};
 }
 
 class PlayerBullet extends Bullet {

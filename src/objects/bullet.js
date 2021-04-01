@@ -8,8 +8,9 @@ export default class Bullet extends Phaser.Physics.Arcade.Sprite {
 		config.scene.add.existing(this);
 		config.scene.physics.add.existing(this);
 
-		this.body.setAllowGravity(false);
-		this.setVelocityX(config.speed * config.direction);
+		this.setVelocityX(config.speed * config.direction)
+			.setPushable(false)
+			.body.setAllowGravity(false);
 
 		config.scene.physics.add.collider(this, config.scene.level, this.explode);
 	}

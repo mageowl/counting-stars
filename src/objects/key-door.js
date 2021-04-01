@@ -1,4 +1,12 @@
+import Player from "./player.js";
+
 export class Key extends Phaser.Physics.Arcade.Sprite {
+	/**
+	 * Player object
+	 * @type {Player}
+	 *
+	 * @memberof Door
+	 */
 	player = null;
 
 	/**
@@ -29,11 +37,17 @@ export class Key extends Phaser.Physics.Arcade.Sprite {
 
 	onCollect = () => {
 		this.destroy();
-		this.player.keysCollected++;
+		this.player.keysCollected.push(this.config.id);
 	};
 }
 
 export class Door extends Phaser.Physics.Arcade.Sprite {
+	/**
+	 * Player object
+	 * @type {Player}
+	 *
+	 * @memberof Door
+	 */
 	player = null;
 
 	/**
@@ -70,9 +84,12 @@ export class Door extends Phaser.Physics.Arcade.Sprite {
 	};
 
 	onOpen = () => {
-		if (this.player.keysCollected > 0) {
+		if (this.player.keysCollected.includes(this.config.id)) {
 			this.destroy();
-			this.player.keysCollected--;
+			this.player.keysCollected.splice(
+				this.player.keysCollected.indexOf(this.config.id),
+				1
+			);
 		}
 	};
 
