@@ -48,8 +48,8 @@
                  "type":"spawn",
                  "visible":true,
                  "width":0,
-                 "x":16,
-                 "y":64
+                 "x":48,
+                 "y":80
                 }, 
                 {
                  "gid":37,
@@ -80,12 +80,6 @@
                  "height":16,
                  "id":12,
                  "name":"bombr1",
-                 "properties":[
-                        {
-                         "name":"spawn",
-                         "type":"string",
-                         "value":"Bombr"
-                        }],
                  "rotation":0,
                  "type":"enemy",
                  "visible":true,
@@ -98,12 +92,6 @@
                  "height":16,
                  "id":13,
                  "name":"bombr2",
-                 "properties":[
-                        {
-                         "name":"spawn",
-                         "type":"string",
-                         "value":"Bombr"
-                        }],
                  "rotation":0,
                  "type":"enemy",
                  "visible":true,
