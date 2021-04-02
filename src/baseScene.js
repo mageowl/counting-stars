@@ -105,7 +105,12 @@ export default class BaseScene extends Phaser.Scene {
 		this.cameras.main
 			.setZoom(2)
 			.startFollow(this.player, false, 0.5, 0.5)
-			.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+			.setBounds(
+				16,
+				0,
+				this.map.widthInPixels - 32,
+				this.map.heightInPixels - 16
+			);
 	}
 
 	update() {
