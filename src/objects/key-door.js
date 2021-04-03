@@ -24,8 +24,7 @@ export class Key extends Phaser.Physics.Arcade.Sprite {
 		config.scene.add.existing(this);
 		config.scene.physics.add.existing(this);
 
-		this.body.setAllowGravity(false);
-		this.setFrame(0).setOrigin(0, 1);
+		this.setFrame(0).setOrigin(0, 1).body.setAllowGravity(false);
 
 		config.scene.playerCallbacks.push(this.onPlayerCreated);
 	}
@@ -65,10 +64,7 @@ export class Door extends Phaser.Physics.Arcade.Sprite {
 		config.scene.add.existing(this);
 		config.scene.physics.add.existing(this);
 
-		this.setFrame(0)
-			.setOrigin(0, 1)
-			.setPushable(false)
-			.body.setAllowGravity(false);
+		this.setOrigin(0, 1).setPushable(false).body.setAllowGravity(false);
 
 		config.scene.playerCallbacks.push(this.onPlayerCreated);
 	}

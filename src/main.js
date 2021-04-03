@@ -1,3 +1,4 @@
+import debugFlags from "./debugFlags.js";
 import Level1 from "./levels/lvl1.js";
 
 const game = new Phaser.Game({
@@ -7,7 +8,8 @@ const game = new Phaser.Game({
 	physics: {
 		default: "arcade",
 		arcade: {
-			gravity: { y: 700 }
+			gravity: { y: 700 },
+			debug: debugFlags.physics
 		}
 	},
 	scene: Level1,
@@ -16,4 +18,4 @@ const game = new Phaser.Game({
 	}
 });
 
-globalThis.pg = game;
+if (debugFlags.exposeGameObj) globalThis.pg = game;
